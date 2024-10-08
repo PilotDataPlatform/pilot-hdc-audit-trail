@@ -4,11 +4,11 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-workers = 4
-threads = 2
-bind = '0.0.0.0:5077'
-daemon = 'false'
-worker_connections = 1200
-accesslog = '-'
-errorlog = '-'
-loglevel = 'debug'
+import pytest
+
+
+@pytest.mark.asyncio
+async def test_health_should_return_204_with_empty_response(client):
+    response = await client.get('/v1/health/')
+    assert response.status_code == 204
+    assert not response.text

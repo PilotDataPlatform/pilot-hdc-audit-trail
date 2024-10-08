@@ -1,4 +1,4 @@
-FROM python:3.7-buster
+FROM docker-registry.ebrains.eu/hdc-services-image/base-image:python-3.10.14-v1 as audit-trail-image
 
 ENV TZ=America/Toronto \
     PYTHONDONTWRITEBYTECODE=true \
@@ -11,18 +11,13 @@ ENV PATH="${POETRY_HOME}/bin:${PATH}"
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-WORKDIR /usr/src/app
-
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    apt-get update && \
-    apt-get install -y vim-tiny less && \
-    ln -s /usr/bin/vim.tiny /usr/bin/vim && \
-    rm -rf /var/lib/apt/lists/*
-
 COPY poetry.lock pyproject.toml ./
 RUN poetry install --no-dev --no-root --no-interaction
 COPY . .
+
+RUN chown -R app:app /app
+USER app
+
 RUN chmod +x gunicorn_starter.sh
 
 CMD ["./gunicorn_starter.sh"]
