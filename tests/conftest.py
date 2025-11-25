@@ -18,6 +18,7 @@ def app() -> FastAPI:
     app.dependency_overrides[atlas_check] = lambda: True
     yield app
 
+
 @pytest.fixture
 async def client(app: FastAPI) -> AsyncClient:
     async with AsyncClient(app=app, base_url='https://audit-trail') as client:

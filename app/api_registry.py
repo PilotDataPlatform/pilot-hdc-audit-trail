@@ -5,12 +5,10 @@
 # You may not use this file except in compliance with the License.
 
 from fastapi import FastAPI
-from fastapi_health import health
 
-from app.resources.health_check import atlas_check
 from app.routers import api_root
-from app.routers.v1.api_lineage import lineage
 from app.routers.v1.api_health import router as health
+from app.routers.v1.api_lineage import lineage
 
 
 def api_registry(app: FastAPI):
