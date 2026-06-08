@@ -5,11 +5,9 @@
 # You may not use this file except in compliance with the License.
 
 import httpx
-from common import LoggerFactory
 
 from app.config import ConfigClass
-
-logger = LoggerFactory('audit_trail_health_check').get_logger()
+from app.logger import logger
 
 
 async def atlas_check():

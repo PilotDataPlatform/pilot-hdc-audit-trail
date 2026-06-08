@@ -4,8 +4,6 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-import logging
-
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import Response
@@ -14,7 +12,6 @@ from fastapi.responses import JSONResponse
 from app.resources.health_check import atlas_check
 
 router = APIRouter()
-logger = logging.getLogger(__name__)
 
 
 @router.get('/', summary='Healthcheck if all service dependencies are online.')

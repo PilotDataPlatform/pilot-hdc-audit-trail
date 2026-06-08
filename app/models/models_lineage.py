@@ -4,13 +4,11 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
-from common import LoggerFactory
 from pydantic import BaseModel
 from pydantic import Field
 
+from app.logger import logger
 from app.models.base_models import APIResponse
-
-_logger = LoggerFactory('api_lineage_action').get_logger()
 
 
 class GETLineage(BaseModel):
@@ -157,5 +155,5 @@ def creation_form_factory(post_form):
         my_form.process_timestamp = getattr(post_form, 'process_timestamp', None)
         return my_form
     except Exception:
-        _logger.exception('Error creating form factory.')
+        logger.exception('Error creating form factory.')
         raise Exception('Invalid post form: ' + str(post_form))
