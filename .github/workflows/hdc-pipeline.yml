@@ -34,7 +34,7 @@ jobs:
     uses: PilotDataPlatform/pilot-hdc-ci-tools/.github/workflows/update_gitops_versions.yml@main
     with:
       service_key: audit-trail-service
-      image_tag: ${{ needs.build_and_publish_hdc.outputs.app_version }}
+      image_tag: "audit-trail-${{ needs.build_and_publish_hdc.outputs.app_version }}"
     secrets: inherit
 
   deploy_hdc:
