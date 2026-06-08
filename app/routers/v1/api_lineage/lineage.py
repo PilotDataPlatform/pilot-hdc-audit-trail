@@ -5,7 +5,6 @@
 # You may not use this file except in compliance with the License.
 
 from common import LineageClient
-from common import LoggerFactory
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi_utils.cbv import cbv
@@ -22,7 +21,6 @@ _API_NAMESPACE = 'api_lineage'
 @cbv(router)
 class Lineage:
     ATLAS_API = f'http://{ConfigClass.ATLAS_HOST}:{ConfigClass.ATLAS_PORT}'
-    _logger = LoggerFactory('api_lineage_action').get_logger()
     lineage_client = LineageClient(ATLAS_API, ConfigClass.ATLAS_ADMIN, ConfigClass.ATLAS_PASSWD)
 
     @router.get('/', response_model=GETLineageResponse, summary='Get Lineage')

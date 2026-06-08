@@ -4,11 +4,11 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
+from common import configure_logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from opentelemetry import trace
 from opentelemetry.exporter.jaeger.thrift import JaegerExporter
-from opentelemetry.instrumentation.elasticsearch import ElasticsearchInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.sdk.resources import SERVICE_NAME
@@ -38,6 +38,8 @@ def create_app():
         allow_headers=['*'],
     )
 
+    configure_logging(ConfigClass.LOGGING_LEVEL, ConfigClass.LOGGING_FORMAT)
+
     # API registry
     # v1
     api_registry(app)
@@ -58,5 +60,4 @@ def instrument_app(app) -> None:
     tracer_provider.add_span_processor(BatchSpanProcessor(jaeger_exporter))
 
     FastAPIInstrumentor.instrument_app(app)
-    ElasticsearchInstrumentor().instrument()
     HTTPXClientInstrumentor().instrument()

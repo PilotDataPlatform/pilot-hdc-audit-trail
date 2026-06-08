@@ -4,6 +4,8 @@
 # Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
 # You may not use this file except in compliance with the License.
 
+import logging
+
 from pydantic import BaseSettings
 from pydantic import Extra
 
@@ -12,10 +14,13 @@ class Settings(BaseSettings):
     """Store service configuration settings."""
 
     APP_NAME: str = 'audit_trail'
-    port: int = 5078
+    port: int = 5077
     host: str = '127.0.0.1'
     env: str = 'test'
     version = '2.2.7'
+
+    LOGGING_LEVEL: int = logging.INFO
+    LOGGING_FORMAT: str = 'json'
 
     ATLAS_ADMIN: str = 'admin'
     ATLAS_PASSWD: str = 'password'
